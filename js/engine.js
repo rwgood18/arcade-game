@@ -84,10 +84,10 @@ var Engine = (function(global) {
      */
     function update(dt) {
         updateEntities(dt);
-        if (allEnemies[allEnemies.length - 1].x > 200) {
+        if (allEnemies[allEnemies.length - 1].x > 100) {
             generate();
         }
-        console.log(allEnemies[allEnemies.length - 1]);
+        //console.log(allEnemies[allEnemies.length - 1]);
         // checkCollisions();
     }
 

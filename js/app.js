@@ -7,9 +7,27 @@ var Enemy = function() {
     // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
 
-    this.x = -200;
-    this.y = Math.floor(Math.random()*251);
-    this.speed = Math.floor(Math.random()*101);//(function get_speed() {
+    this.x = (-300 + Math.random() * 101);
+    var y_position;
+    hash();
+    this.y = y_position;
+    function hash() {
+       number = Math.floor(Math.random() * 101) * 4;
+       if (number < 100) {
+        y_position = 50;
+       } else if (number > 100 && number < 300) {
+        y_position = 140;
+       } else if (number > 200) {
+        y_position = 230;
+       }
+       console.log(number);
+       return y_position;
+    }
+
+    //top    = 50
+    //middle = 140
+    //bottom = 230
+    this.speed = (Math.floor((Math.random() + 1) * 41) * 3);//(function get_speed() {
                  //   number = Math.floor(Math.random()*101);
                  //   if (number < 50) {
                  //       get_speed();
@@ -46,8 +64,8 @@ Enemy.prototype.render = function() {
 
 var Player = function() {
     this.sprite = 'images/char-boy.png';
-    this.x = 100;
-    this.y = 100;
+    this.x = 200;
+    this.y = 140;
     
 }
 
@@ -62,16 +80,16 @@ Player.prototype.render = function() {
 Player.prototype.handleInput = function(keyCode) {
 
     if (keyCode == 'left' && this.x > 0) {
-        this.x = this.x - 50;
+        this.x = this.x - 90;
     }
     else if (keyCode == 'up' && this.y > 0) {
-        this.y = this.y - 50;
+        this.y = this.y - 90;
     }
     else if (keyCode == 'right' && this.x < 354) {
-        this.x = this.x + 50;
+        this.x = this.x + 90;
     }
     else if (keyCode == 'down' && this.y < 355) {
-        this.y = this.y + 50;
+        this.y = this.y + 90;
     }
 }
 
@@ -84,7 +102,7 @@ Player.prototype.handleInput = function(keyCode) {
 var allEnemies = [];
 
 generate = function() {
-    for (var i = 0; i < 4; i++) {
+    for (var i = 0; i < 2; i++) {
         e = new Enemy;
         e.push;
         allEnemies.push(e);
