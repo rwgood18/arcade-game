@@ -29,10 +29,13 @@ var Engine = (function(global) {
     canvas.height = 606;
     doc.body.appendChild(canvas);
 
+
     /* This function serves as the kickoff point for the game loop itself
      * and handles properly calling the update and render methods.
      */
     function main() {
+        //call timer() which will call generate() every two seconds
+        //timer();
         /* Get our time delta information which is required if your game
          * requires smooth animation. Because everyone's computer processes
          * instructions at different speeds we need a constant value that
@@ -80,6 +83,7 @@ var Engine = (function(global) {
      */
     function update(dt) {
         updateEntities(dt);
+
         // checkCollisions();
     }
 
@@ -91,9 +95,11 @@ var Engine = (function(global) {
      * render methods.
      */
     function updateEntities(dt) {
+        
         allEnemies.forEach(function(enemy) {
             enemy.update(dt);
         });
+        
         player.update();
     }
 
@@ -148,6 +154,7 @@ var Engine = (function(global) {
         /* Loop through all of the objects within the allEnemies array and call
          * the render function you have defined.
          */
+
         allEnemies.forEach(function(enemy) {
             enemy.render();
         });
