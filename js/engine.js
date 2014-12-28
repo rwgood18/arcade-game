@@ -67,6 +67,7 @@ var Engine = (function(global) {
      * game loop.
      */
     function init() {
+        generate();
         reset();
         lastTime = Date.now();
         main();
@@ -83,7 +84,10 @@ var Engine = (function(global) {
      */
     function update(dt) {
         updateEntities(dt);
-
+        if (allEnemies[allEnemies.length - 1].x > 200) {
+            generate();
+        }
+        console.log(allEnemies[allEnemies.length - 1]);
         // checkCollisions();
     }
 
@@ -97,8 +101,10 @@ var Engine = (function(global) {
     function updateEntities(dt) {
         
         allEnemies.forEach(function(enemy) {
+        
             enemy.update(dt);
         });
+       
         
         player.update();
     }

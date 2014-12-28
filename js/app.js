@@ -9,7 +9,16 @@ var Enemy = function() {
 
     this.x = -200;
     this.y = Math.floor(Math.random()*251);
-    this.speed = Math.floor(Math.random()*101);
+    this.speed = Math.floor(Math.random()*101);//(function get_speed() {
+                 //   number = Math.floor(Math.random()*101);
+                 //   if (number < 50) {
+                 //       get_speed();
+                 //   } else {
+                 //       return number;
+                 //   }
+                 //})();
+
+    
 }
 
 // Update the enemy's position, required method for game
@@ -74,13 +83,16 @@ Player.prototype.handleInput = function(keyCode) {
 // Place the player object in a variable called player
 var allEnemies = [];
 
-//var generate = function() {
-for (var i = 0; i < 4; i++) {
-    e = new Enemy;
-    e.push;
-    allEnemies.push(e);
+generate = function() {
+    for (var i = 0; i < 4; i++) {
+        e = new Enemy;
+        e.push;
+        allEnemies.push(e);
+    }
 }
-//}    
+
+
+    
 
 
 
@@ -100,4 +112,4 @@ document.addEventListener('keyup', function(e) {
     player.handleInput(allowedKeys[e.keyCode]);
 });
 
-console.log(allEnemies);
+//console.log(allEnemies);
