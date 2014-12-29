@@ -25,7 +25,7 @@ var Engine = (function(global) {
         ctx = canvas.getContext('2d'),
         lastTime;
 
-    canvas.width = 505;
+    canvas.width = 707;
     canvas.height = 606;
     doc.body.appendChild(canvas);
 
@@ -34,8 +34,7 @@ var Engine = (function(global) {
      * and handles properly calling the update and render methods.
      */
     function main() {
-        //call timer() which will call generate() every two seconds
-        //timer();
+
         /* Get our time delta information which is required if your game
          * requires smooth animation. Because everyone's computer processes
          * instructions at different speeds we need a constant value that
@@ -88,7 +87,7 @@ var Engine = (function(global) {
             generate();
         }
         //console.log(allEnemies[allEnemies.length - 1]);
-        // checkCollisions();
+        //checkCollisions();
     }
 
     /* This is called by the update function  and loops through all of the
@@ -104,8 +103,6 @@ var Engine = (function(global) {
         
             enemy.update(dt);
         });
-       
-        
         player.update();
     }
 
@@ -128,7 +125,7 @@ var Engine = (function(global) {
                 'images/grass-block.png'    // Row 2 of 2 of grass
             ],
             numRows = 6,
-            numCols = 5,
+            numCols = 7,
             row, col;
 
         /* Loop through the number of rows and columns we've defined above
