@@ -86,8 +86,9 @@ var Engine = (function(global) {
         if (allEnemies[allEnemies.length - 1].x > 100) {
             generate();
         }
-        //console.log(allEnemies[allEnemies.length - 1]);
-        //checkCollisions();
+        
+        checkCollisions();
+        //console.log(which_block(allEnemies[0].x, allEnemies[0].y));//allEnemies[allEnemies.length - 1].x);//, which_block(allEnemies[allEnemies.length - 1].y));
     }
 
     /* This is called by the update function  and loops through all of the
@@ -132,6 +133,7 @@ var Engine = (function(global) {
          * and, using the rowImages array, draw the correct image for that
          * portion of the "grid"
          */
+        var grid = [];
         for (row = 0; row < numRows; row++) {
             for (col = 0; col < numCols; col++) {
                 /* The drawImage function of the canvas' context element
@@ -141,11 +143,12 @@ var Engine = (function(global) {
                  * so that we get the benefits of caching these images, since
                  * we're using them over and over.
                  */
+                grid.push([row, col]);
+
                 ctx.drawImage(Resources.get(rowImages[row]), col * 101, row * 83);
             }
         }
-
-
+        
         renderEntities();
     }
 
