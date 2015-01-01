@@ -24,11 +24,9 @@ var Engine = (function(global) {
         canvas = doc.createElement('canvas'),
         ctx = canvas.getContext('2d'),
         lastTime;
-
     canvas.width = 707;
     canvas.height = 606;
     doc.body.appendChild(canvas);
-
 
     /* This function serves as the kickoff point for the game loop itself
      * and handles properly calling the update and render methods.
@@ -81,14 +79,15 @@ var Engine = (function(global) {
      * functionality this way (you could just implement collision detection
      * on the entities themselves within your app.js file).
      */
+    
     function update(dt) {
         updateEntities(dt);
-        if (allEnemies[allEnemies.length - 1].x > 100) {
-            generate();
-        }
-        
+        if (start == 'yes') {
+            if (allEnemies[allEnemies.length - 1].x > 100) {
+                generate();
+            }
+        }    
         checkCollisions();
-        //console.log(which_block(allEnemies[0].x, allEnemies[0].y));//allEnemies[allEnemies.length - 1].x);//, which_block(allEnemies[allEnemies.length - 1].y));
     }
 
     /* This is called by the update function  and loops through all of the
@@ -98,10 +97,8 @@ var Engine = (function(global) {
      * the data/properties related to  the object. Do your drawing in your
      * render methods.
      */
-    function updateEntities(dt) {
-        
+    function updateEntities(dt) {       
         allEnemies.forEach(function(enemy) {
-        
             enemy.update(dt);
         });
         player.update();
@@ -118,7 +115,7 @@ var Engine = (function(global) {
          * for that particular row of the game level.
          */
         var rowImages = [
-                'images/water-block.png',   // Top row is water
+                'images/grass-block.png',   // Top row is grass
                 'images/stone-block.png',   // Row 1 of 3 of stone
                 'images/stone-block.png',   // Row 2 of 3 of stone
                 'images/stone-block.png',   // Row 3 of 3 of stone
@@ -150,6 +147,9 @@ var Engine = (function(global) {
         }
         
         renderEntities();
+        if (start == 'no') {
+            title();
+        }
     }
 
     /* This function is called by the render function and is called on each game
@@ -166,6 +166,9 @@ var Engine = (function(global) {
         });
 
         player.render();
+        if (start == 'yes') {
+            prize.render();
+        }
     }
 
     /* This function does nothing but it could have been a good place to
@@ -185,7 +188,8 @@ var Engine = (function(global) {
         'images/water-block.png',
         'images/grass-block.png',
         'images/enemy-bug.png',
-        'images/char-boy.png'
+        'images/char-boy.png',
+        'images/Gem Blue.png'
     ]);
     Resources.onReady(init);
 

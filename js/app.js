@@ -5,8 +5,9 @@ var Enemy = function() {
 
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
-    this.sprite = 'images/enemy-bug.png';
-
+    if (start == 'yes') {
+        this.sprite = 'images/enemy-bug.png';
+    }
     this.x = (-300 + Math.random() * 101);
     var y_position;
     hash();
@@ -27,7 +28,7 @@ var Enemy = function() {
     //top    = 50
     //middle = 140
     //bottom = 230
-    this.speed = (Math.floor((Math.random() + 1) * 41) * 3);
+    this.speed = (Math.floor((Math.random() + 1) * 251));
     
 }
 
@@ -36,7 +37,7 @@ var Enemy = function() {
 
 Enemy.prototype.update = function(dt) {
     this.x = this.x + this.speed * dt;
-    checkCollisions();
+    //checkCollisions();
     
     // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
@@ -46,8 +47,9 @@ Enemy.prototype.update = function(dt) {
 
 // Draw the enemy on the screen, required method for game
 Enemy.prototype.render = function() {
-    
-    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+    if (this.sprite) {
+        ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+    }
 }
 
 // Now write your own player class
@@ -56,18 +58,19 @@ Enemy.prototype.render = function() {
 
 var Player = function() {
     this.sprite = 'images/char-boy.png';
-    this.x = 200;
+    this.x = 900;
     this.y = 400;
     
 }
 
 Player.prototype.update = function(dt) {
-    //this.pos * dt;
 }
 
 Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 }
+
+var start = 'no';
 
 Player.prototype.handleInput = function(keyCode) {
 
@@ -83,15 +86,41 @@ Player.prototype.handleInput = function(keyCode) {
     else if (keyCode == 'down' && this.y < 355) {
         this.y = this.y + 83;
     }
+    else if (keyCode == 'enter' && start == 'no') {
+        this.x = this.x - 700;
+        start = 'yes';
+    }
+}
+
+var Prize = function () {
+    this.sprite = 'images/Gem Blue.png';
+    this.x = 550;
+    this.y = -10;
+}
+
+//var scale = 'whole';
+
+Prize.prototype.render = function() {
+    //if (scale == 'whole') {
+    //    ctx.scale(.5, .5);
+    //    scale = 'half';
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+        //ctx.scale(2, 2);
+    //} else {ctx.drawImage(Resources.get(this.sprite), this.x, this.y);}
+    
+    
 }
 
 // Now instantiate your objects.
+var prize = new Prize();
+
+//console.log(prize.sprite);
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
 var allEnemies = [];
 
 generate = function() {
-    for (var i = 0; i < 1; i++) {
+    for (var i = 0; i < 2; i++) {
         e = new Enemy;
         e.push;
         allEnemies.push(e);
@@ -107,12 +136,12 @@ function which_block(x, y) {
     } else {
         for (var i=0; i<8; i++) {
 
-            if (y < i*83 -70) {break};
+            if (y < i*83 -60) {break};
                 row = i;
         }
 
         for (var i=0; i<8; i++) {
-            if (x < i*100) {break};
+            if (x + 60 < i*100) {break};
                 col = i;
         }  
     }
@@ -131,6 +160,10 @@ function checkCollisions() {
             player.y = 400;
         }
     }
+    if (prize.x < player.x + 100 && prize.y < player.y + 50) {
+        prize.x = player.x;
+        prize.y = player.y - 83;
+    }
 }
 
 var player = new Player();
@@ -142,8 +175,21 @@ document.addEventListener('keyup', function(e) {
         37: 'left',
         38: 'up',
         39: 'right',
-        40: 'down'
+        40: 'down',
+        13: 'enter'
     };
 
     player.handleInput(allowedKeys[e.keyCode]);
 });
+
+function title() {
+    ctx.textAlign = "center";
+    ctx.textBaseline = "Middle";
+    ctx.font = 'bold 50px Trebuchet MS, sans-serif';
+    ctx.fillStyle = '#FFD700';
+    ctx.fillText('Press ENTER to start', 707/2, 303);
+    ctx.font = 'bold 50px Trebuchet MS, sans-serif';
+    ctx.strokeStyle = '#000000';
+    ctx.lineWidth = 3;
+    ctx.strokeText('Press ENTER to start', 707/2, 303);
+}
