@@ -28,7 +28,7 @@ var Enemy = function() {
     //top    = 50
     //middle = 140
     //bottom = 230
-    this.speed = (Math.floor((Math.random() + 1) * 251));
+    this.speed = (Math.floor((Math.random() + 1) * 51));
     
 }
 
@@ -64,6 +64,7 @@ var Player = function() {
 }
 
 Player.prototype.update = function(dt) {
+    
 }
 
 Player.prototype.render = function() {
@@ -71,6 +72,8 @@ Player.prototype.render = function() {
 }
 
 var start = 'no';
+
+var  follow = false;
 
 Player.prototype.handleInput = function(keyCode) {
 
@@ -92,33 +95,47 @@ Player.prototype.handleInput = function(keyCode) {
     }
 }
 
+Player.prototype.follow = function() {
+    prize.x = this.x;
+    prize.y = this.y;
+}
 var Prize = function () {
     this.sprite = 'images/Gem Blue.png';
-    this.x = 550;
-    this.y = -10;
+    this.x = 530;
+    this.y = 30;
 }
 
-//var scale = 'whole';
+Prize.prototype.update = function() {
+    //Check if player has gotton to the gem. If so, gem follows player.
+    if (follow == true) {
+        player.follow();
+    }
+    //check for player win
+    if (this.y > 300) {
+        //allEnemies = [];
+        ctx.font = 'bold 50px Trebuchet MS, sans-serif';
+        ctx.fillStyle = '#FFD700';
+        ctx.fillText('You Win!', 707/2, 303);
+        ctx.font = 'bold 50px Trebuchet MS, sans-serif';
+        ctx.strokeStyle = '#000000';
+        ctx.lineWidth = 3;
+        ctx.strokeText('You Win!', 707/2, 303);
+    }
+}
 
 Prize.prototype.render = function() {
-    //if (scale == 'whole') {
-    //    ctx.scale(.5, .5);
-    //    scale = 'half';
-    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-        //ctx.scale(2, 2);
-    //} else {ctx.drawImage(Resources.get(this.sprite), this.x, this.y);}
-    
-    
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y, 50.5, 85.5);
 }
 
 // Now instantiate your objects.
+var player = new Player();
+
 var prize = new Prize();
 
-//console.log(prize.sprite);
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
 var allEnemies = [];
-
+//generate enemies
 generate = function() {
     for (var i = 0; i < 2; i++) {
         e = new Enemy;
@@ -127,6 +144,7 @@ generate = function() {
     }
 }
 
+//figure out which block entity is in
 function which_block(x, y) {
     var row;
     var col;
@@ -145,28 +163,25 @@ function which_block(x, y) {
                 col = i;
         }  
     }
-    //
     return [row, col];
-    
 }
+
 //https://piazza.com/class/i23vpy8h7l27la?cid=343
 function checkCollisions() {
-    //
+    //Check if player occupies the same tile as an enemy
     for (var i = 0; i < allEnemies.length; i++) {
         if (String(which_block(allEnemies[i].x, allEnemies[i].y)) === String(which_block(player.x, player.y))) {
+            //reset player and enemies
             allEnemies = [];
             generate();
             player.x = 200;
             player.y = 400;
         }
     }
-    if (prize.x < player.x + 100 && prize.y < player.y + 50) {
-        prize.x = player.x;
-        prize.y = player.y - 83;
+    if (player.x == 500 && player.y == -15) {
+        follow = true;
     }
 }
-
-var player = new Player();
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.

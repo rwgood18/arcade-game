@@ -65,7 +65,6 @@ var Engine = (function(global) {
      */
     function init() {
         generate();
-        reset();
         lastTime = Date.now();
         main();
     }
@@ -88,6 +87,7 @@ var Engine = (function(global) {
             }
         }    
         checkCollisions();
+        prize.render();
     }
 
     /* This is called by the update function  and loops through all of the
@@ -102,6 +102,7 @@ var Engine = (function(global) {
             enemy.update(dt);
         });
         player.update();
+        prize.update();
     }
 
     /* This function initially draws the "game level", it will then call
@@ -165,18 +166,11 @@ var Engine = (function(global) {
             enemy.render();
         });
 
-        player.render();
+        
         if (start == 'yes') {
             prize.render();
+            player.render();
         }
-    }
-
-    /* This function does nothing but it could have been a good place to
-     * handle game reset states - maybe a new game menu or a game over screen
-     * those sorts of things. It's only called once by the init() method.
-     */
-    function reset() {
-        // noop
     }
 
     /* Go ahead and load all of the images we know we're going to need to
