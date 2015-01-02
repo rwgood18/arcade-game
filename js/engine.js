@@ -78,10 +78,9 @@ var Engine = (function(global) {
      * functionality this way (you could just implement collision detection
      * on the entities themselves within your app.js file).
      */
-    
     function update(dt) {
         updateEntities(dt);
-        if (start == 'yes') {
+        if (start == true) {
             if (allEnemies[allEnemies.length - 1].x > 100) {
                 generate();
             }
@@ -98,11 +97,11 @@ var Engine = (function(global) {
      * render methods.
      */
     function updateEntities(dt) {       
+        prize.update();
         allEnemies.forEach(function(enemy) {
             enemy.update(dt);
         });
         player.update();
-        prize.update();
     }
 
     /* This function initially draws the "game level", it will then call
@@ -134,6 +133,9 @@ var Engine = (function(global) {
         var grid = [];
         for (row = 0; row < numRows; row++) {
             for (col = 0; col < numCols; col++) {
+                //create a grid to reference with which_block() in app.js
+                grid.push([row, col]);
+
                 /* The drawImage function of the canvas' context element
                  * requires 3 parameters: the image to draw, the x coordinate
                  * to start drawing and the y coordinate to start drawing.
@@ -141,14 +143,11 @@ var Engine = (function(global) {
                  * so that we get the benefits of caching these images, since
                  * we're using them over and over.
                  */
-                grid.push([row, col]);
-
                 ctx.drawImage(Resources.get(rowImages[row]), col * 101, row * 83);
             }
         }
-        
         renderEntities();
-        if (start == 'no') {
+        if (start == false) {
             title();
         }
     }
@@ -161,13 +160,12 @@ var Engine = (function(global) {
         /* Loop through all of the objects within the allEnemies array and call
          * the render function you have defined.
          */
-
         allEnemies.forEach(function(enemy) {
             enemy.render();
         });
-
-        
-        if (start == 'yes') {
+        ctx.clearRect(0, 0, 707, 50);
+        ctx.clearRect(0, 588, 707, 50);
+        if (start == true) {
             prize.render();
             player.render();
         }
@@ -186,7 +184,6 @@ var Engine = (function(global) {
         'images/Gem Blue.png'
     ]);
     Resources.onReady(init);
-
     /* Assign the canvas' context object to the global variable (the window
      * object when run in a browser) so that developer's can use it more easily
      * from within their app.js files.

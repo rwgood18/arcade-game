@@ -1,6 +1,7 @@
 frontend-nanodegree-arcade-game
 ===============================
 
-Students should use this rubric: https://www.udacity.com/course/viewer#!/c-ud015/l-3072058665/m-3072588797
-
-for self-checking their submission.
+This is a recreation of the game frogger. 
+Open index.html in a web browser. Press enter to start.
+Use arrow keys to move player.
+To win, bring the gem back from the other side of the road.
