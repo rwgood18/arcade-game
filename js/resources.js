@@ -67,6 +67,7 @@
              */
             resourceCache[url] = false;
             img.src = url;
+            return false;
         }
     }
 

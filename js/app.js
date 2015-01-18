@@ -4,7 +4,7 @@ var Enemy = function() {
     // we've provided one for you to get started
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
-    if (start == true) {
+    if (start === true) {
         this.sprite = 'images/enemy-bug.png';
     }
     this.x = (-300 + Math.random() * 101);
@@ -29,35 +29,35 @@ var Enemy = function() {
        return y_position;
     }
     this.speed = (Math.floor((Math.random() + 1) * 351));
-}
+};
 
 // Update the enemy's position, required method for game
 // Parameter: dt, a time delta between ticks
 Enemy.prototype.update = function(dt) {
     this.x = this.x + this.speed * dt;
-}
+};
 
 // Draw the enemy on the screen, required method for game
 Enemy.prototype.render = function() {
     if (this.sprite) {
         ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
     }
-}
+};
 
 // Now write your own player class
 var Player = function() {
     this.sprite = 'images/char-boy.png';
     this.x = 900;
     this.y = 400;
-}
+};
 
 Player.prototype.update = function(dt) {
-}
+};
 
 Player.prototype.render = function() {
     //draw player
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-}
+};
 
 Player.prototype.handleInput = function(keyCode) {
     //dictate player movement based on keyboard input
@@ -73,32 +73,32 @@ Player.prototype.handleInput = function(keyCode) {
     else if (keyCode == 'down' && this.y < 355) {
         this.y = this.y + 83;
     }
-    else if (keyCode == 'enter' && start == false) {
+    else if (keyCode == 'enter' && start === false) {
         this.x = this.x - 700;
         start = true;
     }
-}
+};
 
 //make the gem follows the player once he gets it
 Player.prototype.follow = function() {
     prize.x = this.x;
     prize.y = this.y;
-}
+};
 
 
 var Prize = function () {
     this.sprite = 'images/Gem Blue.png';
     this.x = 530;
     this.y = 30;
-}
+};
 
 Prize.prototype.update = function() {
     //check if player has gotton to the gem
-    if (follow == true) {
+    if (follow === true) {
         //gem follows player
         player.follow();
     }
-}
+};
 
 Prize.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y, 50.5, 85.5);
@@ -106,7 +106,7 @@ Prize.prototype.render = function() {
     if (this.y > 300) {
         follow = false;
         //drop gem
-        if (game_over == false) {
+        if (game_over === false) {
             this.x = this.x + 30;
             this.y = this.y +143;
         }
@@ -121,7 +121,7 @@ Prize.prototype.render = function() {
         ctx.strokeText('You Win!', 353.5, 303);
         game_over = true;
     }
-}
+};
 
 //create global variables
 var start = false;
@@ -146,7 +146,7 @@ generate = function() {
         e.push;
         allEnemies.push(e);
     }
-}
+};
 
 //figure out which block entity is in
 function which_block(x, y) {
@@ -158,11 +158,11 @@ function which_block(x, y) {
     } else {
         for (var i=0; i<8; i++) {
 
-            if (y < i*83 -60) {break};
+            if (y < i*83 -60) {break;}
                 row = i;
         }
-        for (var i=0; i<8; i++) {
-            if (x + 60 < i*100) {break};
+        for (i=0; i<8; i++) {
+            if (x + 60 < i*100) {break;}
                 col = i;
         }  
     }
@@ -174,7 +174,7 @@ function checkCollisions() {
     for (var i = 0; i < allEnemies.length; i++) {
         if (String(which_block(allEnemies[i].x, allEnemies[i].y)) === String(which_block(player.x, player.y))) {
             //reset player and enemies and drop gem
-            if (follow == true) {
+            if (follow === true) {
                 follow = false;
                 prize.x = player.x;
                 prize.y = player.y;
@@ -188,10 +188,15 @@ function checkCollisions() {
     //check if player occupies same block as gem
     if (String(which_block(player.x, player.y)) == String(which_block(prize.x, prize.y - 30))) { 
         //gem follow player
-        if (game_over == false) {
+        if (game_over === false) {
             follow = true;
         }
     }
+}
+
+//reload page after two seconds
+function refresh() {
+    setTimeout(function() {location.reload();}, 2000);
 }
 
 // This listens for key presses and sends the keys to your
@@ -214,15 +219,15 @@ function title() {
     ctx.lineWidth = 2;
     ctx.font = 'bold 30px Trebuchet MS, sans-serif';
     ctx.fillStyle = '#FFD700';
-    ctx.fillText('Use the arrow keys to bring the gem back', 353.5, 505*.33);
-    ctx.fillText('from the other side of the road', 353.5, 505*.33+35);
+    ctx.fillText('Use the arrow keys to bring the gem back', 353.5, 166.65);
+    ctx.fillText('from the other side of the road', 353.5, 210.65);
     ctx.font = 'bold 30px Trebuchet MS, sans-serif';
     ctx.strokeStyle = '#000000';
-    ctx.strokeText('Use the arrow keys to bring the gem back', 353.5, 505*.33);
-    ctx.strokeText('from the other side of the road', 353.5, 505*.33+35);
+    ctx.strokeText('Use the arrow keys to bring the gem back', 353.5, 166.65);
+    ctx.strokeText('from the other side of the road', 353.5, 210.65);
     ctx.lineWidth = 3;
     ctx.font = 'bold 50px Trebuchet MS, sans-serif';
-    ctx.fillText('Press ENTER to start', 707/2, 505*.66);
+    ctx.fillText('Press ENTER to start', 707/2, 333.3);
     ctx.font = 'bold 50px Trebuchet MS, sans-serif';
-    ctx.strokeText('Press ENTER to start', 707/2, 505*.66);
+    ctx.strokeText('Press ENTER to start', 707/2, 333.3);
 }

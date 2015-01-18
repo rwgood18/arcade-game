@@ -53,11 +53,15 @@ var Engine = (function(global) {
          */
         lastTime = now;
 
+        //call refesh if player wins
+        if (game_over === true) {
+            refresh();
+        }
         /* Use the browser's requestAnimationFrame function to call this
          * function again as soon as the browser is able to draw another frame.
          */
         win.requestAnimationFrame(main);
-    };
+    }
 
     /* This function does some initial setup that should only occur once,
      * particularly setting the lastTime variable that is required for the
@@ -80,7 +84,7 @@ var Engine = (function(global) {
      */
     function update(dt) {
         updateEntities(dt);
-        if (start == true) {
+        if (start === true) {
             if (allEnemies[allEnemies.length - 1].x > 100) {
                 generate();
             }
@@ -111,6 +115,9 @@ var Engine = (function(global) {
      * they are just drawing the entire screen over and over.
      */
     function render() {
+        //clear top and bottom of parts of the player that hang off the "grid"
+        ctx.clearRect(0, 0, 707, 100);
+        ctx.clearRect(0, 588, 707, 50);
         /* This array holds the relative URL to the image used
          * for that particular row of the game level.
          */
@@ -147,7 +154,7 @@ var Engine = (function(global) {
             }
         }
         renderEntities();
-        if (start == false) {
+        if (start === false) {
             title();
         }
     }
@@ -163,9 +170,7 @@ var Engine = (function(global) {
         allEnemies.forEach(function(enemy) {
             enemy.render();
         });
-        ctx.clearRect(0, 0, 707, 50);
-        ctx.clearRect(0, 588, 707, 50);
-        if (start == true) {
+        if (start === true) {
             prize.render();
             player.render();
         }
