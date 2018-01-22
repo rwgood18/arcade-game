@@ -15,7 +15,7 @@
      */
     function load(urlOrArr) {
         if(urlOrArr instanceof Array) {
-            /* If the developer passed in an array of images
+            /* If you passed in an array of images
              * loop through each value and call our image
              * loader on that image file
              */
@@ -23,15 +23,14 @@
                 _load(url);
             });
         } else {
-            /* The developer did not pass an array to this function,
-             * assume the value is a string and call our image loader
+            /* Assume the value is a string and call our image loader
              * directly.
              */
             _load(urlOrArr);
         }
     }
 
-    /* This is our private image loader function, it is
+    /* This is the private image loader function, it is
      * called by the public image loader function.
      */
     function _load(url) {
@@ -80,7 +79,7 @@
     }
 
     /* This function determines if all of the images that have been requested
-     * for loading have in fact been completed loaded.
+     * for loading have in fact been completely loaded.
      */
     function isReady() {
         var ready = true;

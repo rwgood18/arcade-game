@@ -1,9 +1,6 @@
 // Enemies our player must avoid
 var Enemy = function() {
-    // Variables applied to each of our instances go here,
-    // we've provided one for you to get started
-    // The image/sprite for our enemies, this uses
-    // a helper we've provided to easily load images
+    // The image/sprite for our enemies
     if (start === true) {
         this.sprite = 'images/enemy-bug.png';
     }
@@ -44,7 +41,7 @@ Enemy.prototype.render = function() {
     }
 };
 
-// Now write your own player class
+// Player class
 var Player = function() {
     this.sprite = 'images/char-boy.png';
     this.x = 900;
@@ -52,6 +49,7 @@ var Player = function() {
 };
 
 Player.prototype.update = function(dt) {
+  // player update code coudl go here  
 };
 
 Player.prototype.render = function() {
